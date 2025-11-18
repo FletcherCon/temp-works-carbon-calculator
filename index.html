@@ -5,73 +5,344 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temporary Works Carbon Calculator</title>
     <meta name="description" content="Calculate embodied carbon emissions for temporary works in construction based on Groundforce Shorco methodology">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);
+            min-height: 100vh;
+            padding: 24px;
+            color: #1f2937;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .header img {
+            height: 48px;
+            width: auto;
+        }
+        
+        .icon {
+            width: 32px;
+            height: 32px;
+            color: #16a34a;
+        }
+        
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+        
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+        
+        h3 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 12px;
+        }
+        
+        .info-box {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .btn {
+            padding: 8px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary {
+            background: #16a34a;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #15803d;
+        }
+        
+        .btn-secondary {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #1d4ed8;
+        }
+        
+        .btn-danger {
+            background: transparent;
+            color: #dc2626;
+            padding: 4px;
+        }
+        
+        .btn-danger:hover {
+            color: #991b1b;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: #f9fafb;
+        }
+        
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+        
+        th.text-right {
+            text-align: right;
+        }
+        
+        td {
+            padding: 12px 16px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+        
+        td.text-right {
+            text-align: right;
+        }
+        
+        tr:hover {
+            background: #f9fafb;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .stat-card {
+            padding: 16px;
+            border-radius: 4px;
+        }
+        
+        .stat-card.green {
+            background: #f0fdf4;
+        }
+        
+        .stat-card.blue {
+            background: #dbeafe;
+        }
+        
+        .stat-card.purple {
+            background: #f3e8ff;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .stat-value.green {
+            color: #15803d;
+        }
+        
+        .stat-value.blue {
+            color: #1d4ed8;
+        }
+        
+        .stat-value.purple {
+            color: #7c3aed;
+        }
+        
+        .stat-sub {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        li {
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
-    <div id="app" class="p-6 max-w-6xl mx-auto">
-        <!-- Header -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
-            <div class="flex items-center gap-3 mb-6">
-                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
-                </svg>
-                <h1 class="text-3xl font-bold text-gray-800">Temporary Works Carbon Calculator</h1>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <!-- Update 'engineering-services-logo.png' to match your actual filename -->
+                <img src="engineering-services-logo.png" 
+                     alt="Engineering Services - Fletcher, Brian Perry Civil, Higgins" 
+                     style="height: 80px; width: auto; object-fit: contain; margin-right: 16px;"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%2280%22%3E%3Crect fill=%22%23c8102e%22 width=%22200%22 height=%2280%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 fill=%22white%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 dy=%22.3em%22%3EEngineering Services%3C/text%3E%3C/svg%3E';">
+                <div>
+                    <h1>Temporary Works Carbon Calculator</h1>
+                    <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Engineering Services</p>
+                </div>
             </div>
             
-            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                <p class="text-sm text-gray-700">
-                    Calculate embodied carbon for temporary works based on the Groundforce Shorco methodology. 
-                    This includes manufacturing emissions (A1-A3) and transport emissions (A4).
-                </p>
+            <div class="info-box">
+                Calculate embodied carbon for temporary works based on the Groundforce Shorco methodology. 
+                This includes manufacturing emissions (A1-A3) and transport emissions (A4).
             </div>
 
-            <!-- Input Form -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-                <input type="text" id="description" placeholder="Description (e.g., Trench Box)" class="border rounded px-3 py-2">
-                <select id="equipmentType" class="border rounded px-3 py-2">
+            <div class="form-grid">
+                <input type="text" id="description" placeholder="Description (e.g., Trench Box)">
+                <select id="equipmentType">
                     <option value="steel">Steel</option>
                     <option value="aluminum">Aluminum</option>
                 </select>
-                <input type="number" id="weight" placeholder="Weight (kg)" class="border rounded px-3 py-2" min="0" step="0.01">
-                <input type="number" id="hireWeeks" placeholder="Hire duration (weeks)" class="border rounded px-3 py-2" min="0" step="0.1">
-                <input type="number" id="distance" placeholder="Distance (km)" class="border rounded px-3 py-2" min="0" step="0.1">
+                <input type="number" id="weight" placeholder="Weight (kg)" min="0" step="0.01">
+                <input type="number" id="hireWeeks" placeholder="Hire duration (weeks)" min="0" step="0.1">
+                <input type="number" id="distance" placeholder="Distance (km)" min="0" step="0.1">
             </div>
             
-            <button onclick="addItem()" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 flex items-center gap-2">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <button onclick="addItem()" class="btn btn-primary">
+                <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
                 Add Item
             </button>
         </div>
 
-        <!-- Items Table -->
-        <div id="itemsSection" class="bg-white rounded-lg shadow-lg p-6 mb-6 hidden">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Equipment Items</h2>
-                <button onclick="exportToCSV()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center gap-2 text-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div id="itemsSection" class="card hidden">
+            <div class="flex-between">
+                <h2>Equipment Items</h2>
+                <button onclick="exportToCSV()" class="btn btn-secondary">
+                    <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                     Export CSV
                 </button>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead class="bg-gray-50">
+            <div class="table-container">
+                <table>
+                    <thead>
                         <tr>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Description</th>
-                            <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Type</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Weight (kg)</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Weeks</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Distance (km)</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Embodied CO2e</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Transport CO2e</th>
-                            <th class="px-4 py-3 text-right text-sm font-semibold text-gray-700">Total CO2e</th>
-                            <th class="px-4 py-3"></th>
+                            <th>Description</th>
+                            <th>Type</th>
+                            <th class="text-right">Weight (kg)</th>
+                            <th class="text-right">Weeks</th>
+                            <th class="text-right">Distance (km)</th>
+                            <th class="text-right">Embodied CO2e</th>
+                            <th class="text-right">Transport CO2e</th>
+                            <th class="text-right">Total CO2e</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="itemsTable"></tbody>
@@ -79,56 +350,50 @@
             </div>
         </div>
 
-        <!-- Totals -->
-        <div id="totalsSection" class="bg-white rounded-lg shadow-lg p-6 mb-6 hidden">
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Project Totals</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-green-50 p-4 rounded">
-                    <p class="text-sm text-gray-600 mb-1">Embodied Carbon (A1-A3)</p>
-                    <p class="text-2xl font-bold text-green-700"><span id="totalEmbodied">0.00</span> kg CO2e</p>
-                    <p class="text-xs text-gray-500 mt-1"><span id="totalEmbodiedTonnes">0.000</span> tonnes CO2e</p>
+        <div id="totalsSection" class="card hidden">
+            <h2>Project Totals</h2>
+            <div class="stats-grid">
+                <div class="stat-card green">
+                    <div class="stat-label">Embodied Carbon (A1-A3)</div>
+                    <div class="stat-value green"><span id="totalEmbodied">0.00</span> kg CO2e</div>
+                    <div class="stat-sub"><span id="totalEmbodiedTonnes">0.000</span> tonnes CO2e</div>
                 </div>
-                <div class="bg-blue-50 p-4 rounded">
-                    <p class="text-sm text-gray-600 mb-1">Transport Carbon (A4)</p>
-                    <p class="text-2xl font-bold text-blue-700"><span id="totalTransport">0.00</span> kg CO2e</p>
-                    <p class="text-xs text-gray-500 mt-1"><span id="totalTransportTonnes">0.000</span> tonnes CO2e</p>
+                <div class="stat-card blue">
+                    <div class="stat-label">Transport Carbon (A4)</div>
+                    <div class="stat-value blue"><span id="totalTransport">0.00</span> kg CO2e</div>
+                    <div class="stat-sub"><span id="totalTransportTonnes">0.000</span> tonnes CO2e</div>
                 </div>
-                <div class="bg-purple-50 p-4 rounded">
-                    <p class="text-sm text-gray-600 mb-1">Total Carbon</p>
-                    <p class="text-2xl font-bold text-purple-700"><span id="totalCarbon">0.00</span> kg CO2e</p>
-                    <p class="text-xs text-gray-500 mt-1"><span id="totalCarbonTonnes">0.000</span> tonnes CO2e</p>
+                <div class="stat-card purple">
+                    <div class="stat-label">Total Carbon</div>
+                    <div class="stat-value purple"><span id="totalCarbon">0.00</span> kg CO2e</div>
+                    <div class="stat-sub"><span id="totalCarbonTonnes">0.000</span> tonnes CO2e</div>
                 </div>
             </div>
         </div>
 
-        <!-- Info Section -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-3">Methodology Notes</h3>
-            <ul class="text-sm text-gray-700 space-y-2">
+        <div class="card">
+            <h3>Methodology Notes</h3>
+            <ul>
                 <li>• <strong>Embodied Carbon Rates:</strong> Steel: 2.5 kg CO2e/tonne/week, Aluminum: 8.5 kg CO2e/tonne/week (example values)</li>
                 <li>• <strong>Transport Emissions:</strong> 0.062 kg CO2e/tonne/km (round trip included)</li>
                 <li>• <strong>Lifecycle Stages:</strong> A1-A3 (Manufacturing) + A4 (Transport)</li>
-                <li>• <strong>Note:</strong> These are example rates. Refer to <a href="https://www.vpgroundforce.com/gb/footer-links/useful-links/carbon-calculator-technical-note/" target="_blank" class="text-blue-600 hover:underline">Groundforce Shorco's technical guide</a> for accurate, equipment-specific rates.</li>
+                <li>• <strong>Note:</strong> These are example rates. Refer to <a href="https://www.vpgroundforce.com/gb/footer-links/useful-links/carbon-calculator-technical-note/" target="_blank">Groundforce Shorco's technical guide</a> for accurate, equipment-specific rates.</li>
             </ul>
         </div>
 
-        <!-- Footer -->
-        <footer class="text-center mt-8 text-sm text-gray-600">
-            <p>Based on Groundforce Shorco methodology | <a href="https://github.com/fletchercon/temp-works-carbon-calculator" target="_blank" class="text-blue-600 hover:underline">View on GitHub</a></p>
+        <footer>
+            <p>Based on Groundforce Shorco methodology | <a href="https://github.com/your-username/temp-works-carbon-calculator" target="_blank">View on GitHub</a></p>
         </footer>
     </div>
 
     <script>
-        // Data storage
         let items = [];
         
-        // CO2e rates (kg CO2e per tonne per week) - UPDATE THESE WITH ACTUAL VALUES
         const co2Rates = {
             steel: 2.5,
             aluminum: 8.5
         };
         
-        // Transport emissions (kg CO2e per tonne per km) - UPDATE WITH ACTUAL VALUE
         const transportRate = 0.062;
 
         function calculateItemCarbon(item) {
@@ -163,7 +428,6 @@
                     distance: distance || 0
                 });
 
-                // Clear inputs
                 document.getElementById('description').value = '';
                 document.getElementById('weight').value = '';
                 document.getElementById('hireWeeks').value = '';
@@ -195,19 +459,18 @@
                 totals.total += carbon.total;
 
                 const row = document.createElement('tr');
-                row.className = 'border-t hover:bg-gray-50';
                 row.innerHTML = `
-                    <td class="px-4 py-3 text-sm">${item.description}</td>
-                    <td class="px-4 py-3 text-sm capitalize">${item.equipmentType}</td>
-                    <td class="px-4 py-3 text-sm text-right">${parseFloat(item.weight).toFixed(2)}</td>
-                    <td class="px-4 py-3 text-sm text-right">${parseFloat(item.hireWeeks).toFixed(1)}</td>
-                    <td class="px-4 py-3 text-sm text-right">${item.distance ? parseFloat(item.distance).toFixed(1) : '-'}</td>
-                    <td class="px-4 py-3 text-sm text-right">${carbon.embodied.toFixed(2)} kg</td>
-                    <td class="px-4 py-3 text-sm text-right">${carbon.transport.toFixed(2)} kg</td>
-                    <td class="px-4 py-3 text-sm text-right font-semibold">${carbon.total.toFixed(2)} kg</td>
-                    <td class="px-4 py-3">
-                        <button onclick="removeItem(${item.id})" class="text-red-600 hover:text-red-800" title="Delete item">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <td>${item.description}</td>
+                    <td style="text-transform:capitalize">${item.equipmentType}</td>
+                    <td class="text-right">${parseFloat(item.weight).toFixed(2)}</td>
+                    <td class="text-right">${parseFloat(item.hireWeeks).toFixed(1)}</td>
+                    <td class="text-right">${item.distance ? parseFloat(item.distance).toFixed(1) : '-'}</td>
+                    <td class="text-right">${carbon.embodied.toFixed(2)} kg</td>
+                    <td class="text-right">${carbon.transport.toFixed(2)} kg</td>
+                    <td class="text-right" style="font-weight:600">${carbon.total.toFixed(2)} kg</td>
+                    <td>
+                        <button onclick="removeItem(${item.id})" class="btn btn-danger" title="Delete item">
+                            <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
                         </button>
@@ -216,7 +479,6 @@
                 tbody.appendChild(row);
             });
 
-            // Update totals
             document.getElementById('totalEmbodied').textContent = totals.embodied.toFixed(2);
             document.getElementById('totalEmbodiedTonnes').textContent = (totals.embodied / 1000).toFixed(3);
             document.getElementById('totalTransport').textContent = totals.transport.toFixed(2);
@@ -224,7 +486,6 @@
             document.getElementById('totalCarbon').textContent = totals.total.toFixed(2);
             document.getElementById('totalCarbonTonnes').textContent = (totals.total / 1000).toFixed(3);
 
-            // Show/hide sections
             const hasItems = items.length > 0;
             document.getElementById('itemsSection').classList.toggle('hidden', !hasItems);
             document.getElementById('totalsSection').classList.toggle('hidden', !hasItems);
@@ -278,7 +539,6 @@
             window.URL.revokeObjectURL(url);
         }
 
-        // Allow Enter key to add items
         document.addEventListener('DOMContentLoaded', function() {
             ['description', 'weight', 'hireWeeks', 'distance'].forEach(id => {
                 document.getElementById(id).addEventListener('keypress', function(e) {
