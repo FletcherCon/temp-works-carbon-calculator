@@ -32,7 +32,7 @@ The tool calculates carbon emissions across two key lifecycle stages:
 ## Getting Started
 
 ### Option 1: Use Online
-Simply visit the [live calculator](https://your-username.github.io/temp-works-carbon-calculator/) and start calculating.
+Simply visit the [live calculator](https://fletchercon.github.io/temp-works-carbon-calculator/) and start calculating.
 
 ### Option 2: Run Locally
 1. Download `index.html` from this repository
