@@ -1,6 +1,3 @@
-# temp-works-carbon-calculator
-An interactive carbon calculator app for temporary works! 
-
 # Temporary Works Carbon Calculator
 
 A web-based tool for calculating embodied carbon emissions from temporary works in construction projects, based on the Groundforce Shorco methodology.
