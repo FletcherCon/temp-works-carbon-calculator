@@ -132,5 +132,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For questions, suggestions, or feedback, please open an issue on this repository.
 
 ---
-
-**Note**: This is an educational tool. For official carbon reporting, please consult with qualified environmental consultants and use verified data sources.
