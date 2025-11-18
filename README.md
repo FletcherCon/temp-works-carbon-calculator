@@ -2,11 +2,11 @@
 
 A web-based tool for calculating embodied carbon emissions from temporary works in construction projects, based on the Groundforce Shorco methodology.
 
-## 🌍 Live Demo
+## Live Demo
 
 [View the calculator here] (https://fletchercon.github.io/temp-works-carbon-calculator/)
 
-## 📋 Overview
+## Overview
 
 This calculator helps construction professionals estimate the carbon footprint of temporary works equipment such as:
 - Trench boxes
@@ -20,16 +20,16 @@ The tool calculates carbon emissions across two key lifecycle stages:
 - **A1-A3**: Embodied carbon from manufacturing
 - **A4**: Transport emissions
 
-## ✨ Features
+## Features
 
-- ✅ **Easy-to-use interface** - Add multiple equipment items with a simple form
-- 📊 **Real-time calculations** - Instant carbon footprint updates
-- 📈 **Visual breakdown** - See embodied vs transport emissions separately
-- 💾 **CSV Export** - Download results for reporting and record-keeping
-- 🎯 **Accurate methodology** - Based on industry-standard Groundforce Shorco approach
-- 📱 **Responsive design** - Works on desktop, tablet, and mobile devices
+- **Easy-to-use interface** - Add multiple equipment items with a simple form
+- **Real-time calculations** - Instant carbon footprint updates
+- **Visual breakdown** - See embodied vs transport emissions separately
+- **CSV Export** - Download results for reporting and record-keeping
+- **Accurate methodology** - Based on industry-standard Groundforce Shorco approach
+- **Responsive design** - Works on desktop, tablet, and mobile devices
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Option 1: Use Online
 Simply visit the [live calculator](https://your-username.github.io/temp-works-carbon-calculator/) and start calculating.
@@ -39,7 +39,7 @@ Simply visit the [live calculator](https://your-username.github.io/temp-works-ca
 2. Open the file in any modern web browser
 3. No installation or setup required!
 
-## 📖 How to Use
+## How to Use
 
 1. **Enter equipment details:**
    - Description (e.g., "Trench Box Type A")
@@ -57,7 +57,7 @@ Simply visit the [live calculator](https://your-username.github.io/temp-works-ca
 
 4. **Export results** to CSV for documentation
 
-## 🔬 Methodology
+## Methodology
 
 This calculator implements the methodology published by Groundforce Shorco for calculating embodied CO2e in temporary works:
 
@@ -86,7 +86,7 @@ Following BS EN 15978 standards:
 - Update the rates in the code to match your specific equipment and supplier data
 - This tool accounts for equipment reuse through the weekly hire duration methodology
 
-## 🛠️ Customization
+## Customization
 
 To update the carbon rates for your specific equipment:
 
@@ -101,30 +101,30 @@ const co2Rates = {
 3. Update the `transportRate` value if needed
 4. Save and refresh the page
 
-## 📚 References
+## References
 
 - [Groundforce Shorco Carbon Calculator Technical Note](https://www.vpgroundforce.com/gb/footer-links/useful-links/carbon-calculator-technical-note/)
 - [BS EN 15978 - Sustainability of construction works](https://www.en-standard.eu/bs-en-15978-2011-sustainability-of-construction-works-assessment-of-environmental-performance-of-buildings-calculation-method/)
 - [VP Group Sustainability Report](https://sustainability.vpplc.com/)
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to:
 - Report bugs by opening an issue
 - Suggest new features
 - Submit pull requests with improvements
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Methodology based on work by Groundforce Shorco
 - Built to support sustainable construction practices
 - Inspired by the need for accessible carbon accounting tools in the construction industry
 
-## 📞 Contact
+## Contact
 
 For questions, suggestions, or feedback, please open an issue on this repository.
 
