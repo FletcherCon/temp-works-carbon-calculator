@@ -4,7 +4,7 @@ A web-based tool for calculating embodied carbon emissions from temporary works 
 
 ## 🌍 Live Demo
 
-[View the calculator here](https://your-username.github.io/temp-works-carbon-calculator/)
+[View the calculator here](https://fletchercon.github.io/temp-works-carbon-calculator/)
 
 ## 📋 Overview
 
