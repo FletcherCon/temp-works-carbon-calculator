@@ -6,11 +6,8 @@
     <title>Temporary Works Carbon Calculator - Engineering Services</title>
     <meta name="description" content="Calculate embodied carbon emissions for temporary works in construction based on Groundforce Shorco methodology">
     
-    <!-- Favicon - SVG version (works in modern browsers) -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2316a34a'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EC%3C/text%3E%3C/svg%3E">
-    
-    <!-- Fallback for older browsers -->
-    <link rel="alternate icon" type="image/png" href="engineering-services-logo.png">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%2316a34a'/%3E%3Ctext x='50' y='65' font-size='50' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3EC%3C/text%3E%3C/svg%3E">
     
     <style>
         * {
@@ -285,6 +282,11 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -292,15 +294,14 @@
     <div class="container">
         <div class="card">
             <div class="header">
-                <!-- Logo will work once uploaded to GitHub repository -->
-                <!-- Save your logo as 'engineering-services-logo.png' in the same folder -->
+                <!-- Logo will show once engineering-services-logo.png is uploaded to GitHub -->
                 <img src="engineering-services-logo.png" 
                      alt="Engineering Services - Fletcher, Brian Perry Civil, Higgins" 
                      style="height: 80px; width: auto; object-fit: contain; margin-right: 16px;"
                      onerror="this.style.display='none'">
                 <div>
                     <h1>Temporary Works Carbon Calculator</h1>
-                  
+                    <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Engineering Services</p>
                 </div>
             </div>
             
@@ -382,10 +383,10 @@
         <div class="card">
             <h3>Methodology Notes</h3>
             <ul>
-                <li>• <strong>Embodied Carbon Rates:</strong> Steel: 2.5 kg CO2e/tonne/week, Aluminum: 8.5 kg CO2e/tonne/week (example values)</li>
-                <li>• <strong>Transport Emissions:</strong> 0.062 kg CO2e/tonne/km (round trip included)</li>
+                <li>• <strong>Embodied Carbon Rates:</strong> Steel: 0.0145 kgCO2e/kg/week, Aluminum: 0.049 kgCO2e/kg/week (based on Groundforce Shorco methodology)</li>
+                <li>• <strong>Transport Emissions:</strong> 0.00016 kgCO2e/kg/km (round trip included)</li>
                 <li>• <strong>Lifecycle Stages:</strong> A1-A3 (Manufacturing) + A4 (Transport)</li>
-                <li>• <strong>Note:</strong> These are example rates. Refer to <a href="https://www.vpgroundforce.com/gb/footer-links/useful-links/carbon-calculator-technical-note/" target="_blank">Groundforce Shorco's technical guide</a> for accurate, equipment-specific rates.</li>
+                <li>• <strong>Reference:</strong> <a href="https://www.vpgroundforce.com/gb/footer-links/useful-links/carbon-calculator-technical-note/" target="_blank">Groundforce Shorco's technical guide</a></li>
             </ul>
         </div>
 
@@ -397,20 +398,26 @@
     <script>
         let items = [];
         
+        // CO2e rates based on Groundforce Shorco methodology
+        // Rates are in kgCO2e per kg (not per tonne) per week
         const co2Rates = {
-            steel: 2.5,
-            aluminum: 8.5
+            steel: 0.0145,      // kgCO2e per kg per week
+            aluminum: 0.049     // kgCO2e per kg per week (approximate - update with actual value)
         };
         
-        const transportRate = 0.062;
+        // Transport emissions: kgCO2e per kg per km (one way)
+        const transportRate = 0.00016;
 
         function calculateItemCarbon(item) {
-            const weightTonnes = parseFloat(item.weight) / 1000;
+            const weightKg = parseFloat(item.weight);
             const weeks = parseFloat(item.hireWeeks);
             const distance = parseFloat(item.distance) || 0;
             
-            const embodiedCarbon = weightTonnes * co2Rates[item.equipmentType] * weeks;
-            const transportCarbon = weightTonnes * distance * 2 * transportRate;
+            // Embodied carbon: weight (kg) × CO2e rate × weeks
+            const embodiedCarbon = weightKg * co2Rates[item.equipmentType] * weeks;
+            
+            // Transport emissions: weight (kg) × distance (km) × 2 (round trip) × transport rate
+            const transportCarbon = weightKg * distance * 2 * transportRate;
             
             return {
                 embodied: embodiedCarbon,
